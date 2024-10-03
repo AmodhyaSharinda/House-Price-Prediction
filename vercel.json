@@ -8,3 +8,4 @@
     {"src": "/flask(.*)", "dest": "app.py"},
     {"src": "/(.*)", "dest": "house_Price.py"}
   ]
+}
