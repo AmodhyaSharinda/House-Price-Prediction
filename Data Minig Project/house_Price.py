@@ -14,9 +14,38 @@ masonry_area = st.number_input("Masonry veneer area in square feet", key="masonr
 
 KitchenQual = st.selectbox("Kitchen quality", ["Ex Excellent", "Gd Good", "TA Typical/Average", "Fa Fair", "Po Poor"], key="kitchen_quality")
 
-total_rooms = st.number_input("Total rooms above grade (does not include bathrooms)", key="total_rooms")
+# Text input for total rooms
+total_rooms_input = st.text_input(
+    "Total rooms above grade (does not include bathrooms)", 
+    key="total_rooms"
+)
 
-num_fireplaces = st.number_input("Number of fireplaces", key="num_fireplaces")
+# Initialize total_rooms variable
+total_rooms = 0
+
+# Convert input to integer
+if total_rooms_input:
+    try:
+        total_rooms = int(total_rooms_input)  # Convert to integer
+    except ValueError:
+        st.error("Please enter a valid integer. Floats are not allowed.")
+
+ # Text input for number of fireplaces
+num_fireplaces_input = st.text_input(
+    "Number of fireplaces", 
+    key="num_fireplaces"
+)
+
+# Initialize num_fireplaces variable
+num_fireplaces = 0
+
+# Convert input to integer
+if num_fireplaces_input:
+    try:
+        num_fireplaces = int(num_fireplaces_input)  # Convert to integer
+    except ValueError:
+        st.error("Please enter a valid integer. Floats are not allowed.")       
+
 
 GarageType = st.selectbox("Garage location", ["2Types More than one type of garage", "Attchd Attached to home", "Basment Basement Garage", "BuiltIn Built In",
                                  "CarPort Car Port", "Detchd Detached from home", "No No Garage"], key="GarageType")
@@ -25,9 +54,38 @@ GarageFinish = st.selectbox("Interior finish of the garage", ["Fin Finished", "R
 
 garage_size = st.number_input("Size of garage in square feet", key="garage_size")
 
-year_built = st.number_input("Year Built", key="year_built")
 
-year_remodeled = st.number_input("Year Remodeled", key="year_remodeled")
+# Set the current year
+current_year = 2024  # Update this to the current year
+
+# Number input for year built
+year_built = st.number_input(
+    "Year Built", 
+    key="year_built", 
+    min_value=1900,  # Set the minimum valid year (you can adjust this as needed)
+    max_value=current_year,  # Set the maximum valid year
+    step=1,  # Increment step for years
+    format="%d"  # Ensure the input format is an integer
+)
+
+# Optional: Display an error message if the input is outside valid range
+if year_built < 1900 or year_built > current_year:
+    st.error("Please enter a valid year between 1900 and the current year.")
+
+
+# Number input for year remodeled
+year_remodeled = st.number_input(
+    "Year Remodeled", 
+    key="year_remodeled", 
+    min_value=year_built,  # Set minimum value to year_built
+    max_value=current_year,  # Set the maximum valid year
+    step=1,  # Increment step for years
+    format="%d"  # Ensure the input format is an integer
+)
+
+# Optional: Display an error message if year_remodeled is less than year_built
+if year_remodeled < year_built:
+    st.error("Year Remodeled must be greater than or equal to Year Built.")
 
 st.write("")
 st.write("Total Area in square feet")
@@ -45,13 +103,73 @@ basement_floor = st.number_input("Basement square feet", key="basement_floor")
 
 st.write("")
 st.write("Total Bathrooms")
-basement_full_bathrooms = st.number_input("Basement full bathrooms", key="basement_full_bathrooms")
 
-basement_half_bathrooms = st.number_input("Basement half bathrooms", key="basement_half_bathrooms")
+# Text input for basement full bathrooms
+basement_full_bathrooms_input = st.text_input(
+    "Basement full bathrooms", 
+    key="basement_full_bathrooms"
+)
 
-full_bathrooms = st.number_input("Full bathrooms", key="full_bathrooms")
+# Initialize half_bathrooms variable
+basement_full_bathrooms = 0
 
-half_bathrooms = st.number_input("Half bathrooms", key="half_bathrooms")
+# Convert input to integer
+if basement_full_bathrooms_input:
+    try:
+        basement_full_bathrooms = int(basement_full_bathrooms_input)  # Convert to integer
+    except ValueError:
+        st.error("Please enter a valid integer. Floats are not allowed.")
+
+# Text input for Basement half bathrooms
+basement_half_bathrooms_input = st.text_input(
+    "Basement half bathrooms", 
+    key="basement_half_bathrooms"
+)
+
+# Initialize half_bathrooms variable
+basement_half_bathrooms = 0
+
+# Convert input to integer
+if basement_half_bathrooms_input:
+    try:
+        basement_half_bathrooms = int(basement_half_bathrooms_input)  # Convert to integer
+    except ValueError:
+        st.error("Please enter a valid integer. Floats are not allowed.")
+
+
+
+
+# Text input for full bathrooms
+full_bathrooms_input = st.text_input(
+    "Full bathrooms", 
+    key="full_bathrooms"
+)
+
+# Initialize half_bathrooms variable
+full_bathrooms = 0
+
+# Convert input to integer
+if full_bathrooms_input:
+    try:
+        full_bathrooms = int(full_bathrooms_input)  # Convert to integer
+    except ValueError:
+        st.error("Please enter a valid integer. Floats are not allowed.")
+
+# Text input for half bathrooms
+half_bathrooms_input = st.text_input(
+    "Half bathrooms", 
+    key="half_bathrooms"
+)
+
+# Initialize half_bathrooms variable
+half_bathrooms = 0
+
+# Convert input to integer
+if half_bathrooms_input:
+    try:
+        half_bathrooms = int(half_bathrooms_input)  # Convert to integer
+    except ValueError:
+        st.error("Please enter a valid integer. Floats are not allowed.")
 
 
 st.write("")
@@ -150,30 +268,6 @@ def extract_numerical_part(value):
 # Apply the function to the 'OverallQuality_Condition' column
 OverallQuality_Condition = extract_numerical_part(OverallQuality_Condition)
 
-# Sample categorical and numerical features
-# Categorical and Numerical Columns
-# categorical_columns = [
-#     "kitchen_quality",
-#     "GarageType",
-#     "garage_finish",
-#     "ExteriorQuality_Condition",
-#     "BasementQuality_Condition"
-# ]
-
-# numerical_columns = [
-#     "lot_size",
-#     "masonry_area",
-#     "total_rooms",
-#     "num_fireplaces",
-#     "garage_size",
-#     "AgeBuilt",
-#     "AgeRemod",
-#     "totalarea",
-#     "totalsf",
-#     "totalbaths",
-#     "OverallQuality_Condition",
-# ]
-
 # When user clicks 'Predict Price'
 if st.button('Predict Price'):
     # Prepare input data in the same format as used during model training
@@ -220,14 +314,22 @@ if st.button('Predict Price'):
     # Print the dictionary
     # st.write(input_keys_dict)
 
+    # Print the dictionary
+    # st.write(input_keys_dict)
+
 
     # Send POST request to Flask backend
     response = requests.post('http://127.0.0.1:5000/predict', json=input_keys_dict)
     if response.status_code == 200:
         result = response.json()
-         # Display predicted price
-        st.write(f"Predicted House Price: ${result['predicted_price']:.2f}")
+
         print(f"Predicted House Price: ${result['predicted_price']:.2f}")
+
+        sale_price = np.expm1(result['predicted_price'])
+
+         # Display predicted price
+        st.write(f"Predicted House Price: ${sale_price:.2f}")
+        print(f"Predicted House Price: ${sale_price:.2f}")
     else:
         print(f"Error: Received status code {response.status_code}")
         print(f"Response content: {response.content}")

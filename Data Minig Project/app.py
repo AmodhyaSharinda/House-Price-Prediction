@@ -14,7 +14,6 @@ app = Flask(__name__)
 with open('filtered_label_encoders.pkl', 'rb') as file:
     label_encoder = pickle.load(file)
 
-
 # Load the trained model
 with open('linear_regression_model.pkl', 'rb') as file:
     model = pickle.load(file)
@@ -79,6 +78,7 @@ def predict():
 
     # Make prediction using the preprocessed data
     prediction = model.predict(df)
+
 
     # Convert prediction to a scalar
     predicted_price = float(prediction[0]) if prediction.ndim > 0 else float(prediction)
